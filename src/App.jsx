@@ -11,6 +11,7 @@ import CourierLandingPage from './components/courier/CourierLandingPage';
 import UserProfile from './components/user/UserProfile';
 import UserNavBar from './components/user/UserNavbar';
 import UserLogout from './components/user/UserLogout';
+import Cart from './components/user/UserCart';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/user' element={<UserNavBar />}>
             <Route path="/user/home" element={<UserLandingPage />} />
             <Route path="/user/profile" element={<UserProfile />} />
+            <Route path="/user/cart" element={<Cart />} />
             <Route path="/user/logout" element={<UserLogout />} />
           </Route>
           <Route path="/admin/home" element={<AdminLandingPage />} />

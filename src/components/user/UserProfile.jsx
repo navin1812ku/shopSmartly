@@ -103,23 +103,39 @@ const UserProfile = () => {
         });
     };
 
-    const handleAddAddressSubmit = () => {
-        // Implement add address logic here
-        console.log('Add new address:', newAddress);
-        // Reset new address state and disable add address mode
-        setNewAddress({
-            fullName: '',
-            mobileNumber: '',
-            pincode: '',
-            houseNo: '',
-            street: '',
-            landmark: '',
-            city: '',
-            state: '',
-            country: '',
-            isDefault: false
-        });
-        setAddAddressMode(false);
+    const handleAddAddressSubmit = async() => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post('http://localhost:8081/user/address', newAddress, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (response.data.success) {
+                setSuccessMessage(response.data.message);
+                setTimeout(() => {
+                    setSuccessMessage('');
+                }, 3000);
+                window.location.reload();
+            } else {
+                console.error('Error updating profile:', response.data.message);
+            }
+            setNewAddress({
+                fullName: '',
+                mobileNumber: '',
+                pincode: '',
+                houseNo: '',
+                street: '',
+                landmark: '',
+                city: '',
+                state: '',
+                country: '',
+                isDefault: false
+            });
+            setAddAddressMode(false);
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
     };
 
     const handleEditAddress = (addressId) => {
@@ -156,7 +172,7 @@ const UserProfile = () => {
     const handleSaveEditedAddress = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post(`http://localhost:8081/user/updateAddress/${editAddressId}`, editAddressDetails, {
+            const response = await axios.post(`http://localhost:8081/user/address/${editAddressId}`, editAddressDetails, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -165,7 +181,7 @@ const UserProfile = () => {
                 setSuccessMessage(`Address edited`);
                 setTimeout(() => {
                     setSuccessMessage('');
-                }, 1000);
+                }, 3000);
                 setEditAddressMode(false);
                 window.location.reload();
             } else {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import productImage from '../../../public/product.jpg'
+import productImage from '../../../public/product.jpg';
 
 const UserLandingPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -22,6 +22,26 @@ const UserLandingPage = () => {
         } else {
             setSuggestedNames([]);
         }
+
+        const fetchAllProducts=async()=>{
+            try{
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`http://localhost:8081/product/set`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (response.data.success) {
+                    setProducts(response.data.products);
+                } else {
+                    setErrorMessage(true);
+                }
+            }
+            catch{
+                console.log("faile to fetch products");
+            }
+        }
+        fetchAllProducts();
     }, [searchTerm]);
 
     const fetchSuggestions = async () => {
@@ -74,7 +94,11 @@ const UserLandingPage = () => {
             });
             if (response.data.success) {
                 setSuccessMessage('Added to cart');
-                setTimeout(() => setSuccessMessage(''), 1000);
+                setTimeout(() => setSuccessMessage(''), 2000);
+            }
+            else if(response.data.message===`Already added`){
+                setSuccessMessage('Already added');
+                setTimeout(() => setSuccessMessage(''), 2000);
             }
         } catch (error) {
             console.error('Error adding product to cart:', error);
@@ -128,7 +152,7 @@ const UserLandingPage = () => {
     return (
         <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center">
             {successMessage && (
-                <div className="absolute top-10 left-10 bg-green-500 text-white p-2 rounded">
+                <div className="absolute top-13 right-5 bg-green-500 text-white p-2 rounded">
                     {successMessage}
                 </div>
             )}
@@ -178,7 +202,6 @@ const UserLandingPage = () => {
                             <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
                             <p className="text-gray-600 mb-2">{product.description}</p>
                             <p className="text-gray-800 font-bold mb-2">Price: ${product.price}</p>
-                            <p className="text-gray-600 mb-2">Category: {product.category}</p>
                             <p className="text-gray-600 mb-2">Brand: {product.brand}</p>
                             <button
                                 onClick={() => handleAddToCart(product._id)}
