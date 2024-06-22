@@ -13,6 +13,7 @@ import UserNavBar from './components/user/UserNavbar';
 import UserLogout from './components/user/UserLogout';
 import Cart from './components/user/UserCart';
 import UserWishList from './components/user/UserWishList';
+import UserWishListDetails from './components/user/UserWishListDetails';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/user/profile" element={<UserProfile />} />
             <Route path="/user/cart" element={<Cart />} />
             <Route path="/user/wishList" element={<UserWishList />} />
+            <Route path="/user/wishListDetails/:id" element={<UserWishListDetails />} />
             <Route path="/user/logout" element={<UserLogout />} />
           </Route>
           <Route path="/admin/home" element={<AdminLandingPage />} />
