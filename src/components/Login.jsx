@@ -27,7 +27,7 @@ const Login = () => {
                         navigate(`/admin/home`);
                     }
                     else if (response.data.details.role === `USER`) {
-                        navigate(`/user/home`);
+                        navigate(`/user/home/products`);
                     } else if (response.data.details.role === `VENDOR`) {
                         navigate(`/vendor/home`);
                     } else if (response.data.details.role === `COURIER`) {

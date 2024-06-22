@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import productImage from '../../../public/product.jpg';
+import { useParams } from 'react-router';
 
 const UserLandingPage = () => {
+    const { id } = useParams();
     const [searchTerm, setSearchTerm] = useState('');
     const [products, setProducts] = useState([]);
     const [suggestedNames, setSuggestedNames] = useState([]);
@@ -15,6 +17,15 @@ const UserLandingPage = () => {
     const inputRef = useRef(null);
 
     useEffect(() => {
+        if (id !== 'products') {
+            setSearchTerm(id);
+            searchById(id);
+        } else {
+            fetchAllProducts();
+        }
+    }, [id]);   
+
+    useEffect(() => {
         if (searchTerm.trim() !== '') {
             setErrorMessage(false);
             setIsSuggestionClicked(true);
@@ -22,27 +33,45 @@ const UserLandingPage = () => {
         } else {
             setSuggestedNames([]);
         }
-
-        const fetchAllProducts=async()=>{
-            try{
-                const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:8081/product/set`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                if (response.data.success) {
-                    setProducts(response.data.products);
-                } else {
-                    setErrorMessage(true);
-                }
-            }
-            catch{
-                console.log("faile to fetch products");
-            }
-        }
-        fetchAllProducts();
     }, [searchTerm]);
+
+    const searchById = async (id) => {
+        try {
+            setProducts([]);
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`http://localhost:8081/product/searchProduct/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(response.data);
+            if (response.data.success) {
+                setProducts(response.data.products);
+            } else {
+                setErrorMessage(true);
+            }
+        } catch (error) {
+            console.error('Error searching products:', error);
+        }
+    };
+
+    const fetchAllProducts = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`http://localhost:8081/product/set`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (response.data.success) {
+                setProducts(response.data.products);
+            } else {
+                setErrorMessage(true);
+            }
+        } catch (error) {
+            console.error('Failed to fetch products:', error);
+        }
+    };
 
     const fetchSuggestions = async () => {
         try {
@@ -95,8 +124,7 @@ const UserLandingPage = () => {
             if (response.data.success) {
                 setSuccessMessage('Added to cart');
                 setTimeout(() => setSuccessMessage(''), 2000);
-            }
-            else if(response.data.message===`Already added`){
+            } else if (response.data.message === `Already added`) {
                 setSuccessMessage('Already added');
                 setTimeout(() => setSuccessMessage(''), 2000);
             }
@@ -195,26 +223,27 @@ const UserLandingPage = () => {
                 )}
             </form>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-                {products && products.length > 0 && products.map((product) => (
-                    <div key={product._id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                        <img src={productImage} alt={product.title} className="w-full h-48 object-cover" />
-                        <div className="p-4">
-                            <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
-                            <p className="text-gray-600 mb-2">{product.description}</p>
-                            <p className="text-gray-800 font-bold mb-2">Price: ${product.price}</p>
-                            <p className="text-gray-600 mb-2">Brand: {product.brand}</p>
-                            <button
-                                onClick={() => handleAddToCart(product._id)}
-                                className="mt-2 w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-                            >
-                                Add to Cart
-                            </button>
+                {products && products.length > 0 ? (
+                    products.map((product) => (
+                        <div key={product._id} className="bg-white shadow-md rounded-lg overflow-hidden">
+                            <img src={productImage} alt={product.title} className="w-full h-48 object-cover" />
+                            <div className="p-4">
+                                <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
+                                <p className="text-gray-600 mb-2">{product.description}</p>
+                                <p className="text-gray-800 font-bold mb-2">Price: ${product.price}</p>
+                                <p className="text-gray-600 mb-2">Brand: {product.brand}</p>
+                                <button
+                                    onClick={() => handleAddToCart(product._id)}
+                                    className="mt-2 w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                >
+                                    Add to Cart
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                ))}
-                {errorMessage && (
+                    ))
+                ) : (
                     <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 text-center text-gray-500">
-                        Searched product not found.
+                        {errorMessage ? 'Searched product not found.' : 'No products available.'}
                     </div>
                 )}
             </div>
