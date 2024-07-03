@@ -222,11 +222,11 @@ const UserLandingPage = () => {
                     </div>
                 )}
             </form>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 md:w-11/12 lg:w-9/12 lg:grid-cols-5 w-full">
                 {products && products.length > 0 ? (
                     products.map((product) => (
                         <div key={product._id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                            <img src={productImage} alt={product.title} className="w-full h-48 object-cover" />
+                            <img src={productImage} alt={product.title} className="w-72 h-48" />
                             <div className="p-4">
                                 <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
                                 <p className="text-gray-600 mb-2">{product.description}</p>

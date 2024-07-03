@@ -43,7 +43,7 @@ const UserWishListDetails = () => {
         <div>
             <div className=" font-bold mt-5 text-5xl flex relative">
                 <h1 className=" text-left">Wish List</h1>
-                <h1 className=" absolute ml-72 text-red-800">{wishListName}</h1>
+                <h1 className=" absolute ml-72 text-red-800">{wishListName.charAt(0).toUpperCase()+wishListName.substring(1)}</h1>
             </div>
             <div className="w-full max-w-4xl mt-4 ml-72">
                 {wishList && wishList.length > 0 ? (
