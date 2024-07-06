@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useUserstate } from '../components/useContext/UserContext';
+import bcrytojs from 'bcryptjs';
 
 const Login = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
+    const { setLoggedInStatus, setUserLoggedInStatus, setAdminLoggedInStatus, setVendorLoggedInStatus, setCourierLoggedInStatus } = useUserstate();
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
@@ -24,16 +27,21 @@ const Login = () => {
                 localStorage.setItem('role', response.data.details.role);
                 setTimeout(() => {
                     if (response.data.details.role === `ADMIN`) {
+                        setAdminLoggedInStatus();
                         navigate(`/admin/home`);
                     }
                     else if (response.data.details.role === `USER`) {
+                        setUserLoggedInStatus();
                         navigate(`/user/home/products`);
                     } else if (response.data.details.role === `VENDOR`) {
+                        setVendorLoggedInStatus();
                         navigate(`/vendor/home`);
                     } else if (response.data.details.role === `COURIER`) {
+                        setCourierLoggedInStatus();
                         navigate(`/courier/home`);
                     }
                 }, 2000);
+                setLoggedInStatus();
             } else {
                 setErrorMessage(response.data.message);
                 setSuccessMessage('');
@@ -53,7 +61,7 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 relative">
+        <div className="min-h-svh flex items-center justify-center relative bg-[url('https://images.unsplash.com/photo-1487088678257-3a541e6e3922?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bG9naW58ZW58MHx8MHx8fDA%3D')] bg-cover">
             {successMessage && (
                 <div className="absolute top-4 right-4 bg-green-500 text-white p-4 rounded shadow-lg flex items-center">
                     <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -70,7 +78,7 @@ const Login = () => {
                     <span>{errorMessage}</span>
                 </div>
             )}
-            <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
+            <div className="bg-cyan-400 p-8 rounded-3xl shadow-md w-full max-w-sm">
                 <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">

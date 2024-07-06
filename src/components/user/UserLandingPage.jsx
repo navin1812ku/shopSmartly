@@ -23,7 +23,7 @@ const UserLandingPage = () => {
         } else {
             fetchAllProducts();
         }
-    }, [id]);   
+    }, [id]);
 
     useEffect(() => {
         if (searchTerm.trim() !== '') {
@@ -178,13 +178,13 @@ const UserLandingPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center">
+        <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center sm:w-full">
             {successMessage && (
                 <div className="absolute top-13 right-5 bg-green-500 text-white p-2 rounded">
                     {successMessage}
                 </div>
             )}
-            <form id="searchForm" onSubmit={handleSearch} className="flex justify-center mb-1 w-1/2">
+            <form id="searchForm" onSubmit={handleSearch} className="flex justify-center mb-1 md:w-1/2 sm:w-full">
                 <input
                     type="text"
                     value={searchTerm}
@@ -194,11 +194,11 @@ const UserLandingPage = () => {
                     onBlur={() => setTimeout(() => setIsFocused(false), 100)}
                     ref={inputRef}
                     placeholder="Search for products"
-                    className="w-full p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="md:w-full p-2 border border-gray-300 rounded-s-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-full"
                 />
                 <button
                     type="submit"
-                    className="p-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="p-2 bg-blue-500 text-white rounded-e-3xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     Search
                 </button>
@@ -222,11 +222,11 @@ const UserLandingPage = () => {
                     </div>
                 )}
             </form>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 md:w-11/12 lg:w-9/12 lg:grid-cols-5 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 md:w-11/12 lg:w-9/12 lg:grid-cols-3 w-80">
                 {products && products.length > 0 ? (
                     products.map((product) => (
                         <div key={product._id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                            <img src={productImage} alt={product.title} className="w-72 h-48" />
+                            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6_Xw-aC9Uic4B28k75kjPZ_KTRYXt_EZs3A&s' alt={product.title} className="w-72 h-48" />
                             <div className="p-4">
                                 <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
                                 <p className="text-gray-600 mb-2">{product.description}</p>
