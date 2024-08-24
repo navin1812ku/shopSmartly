@@ -30,7 +30,6 @@ const Login = () => {
                         navigate(`/user/home/products`);
                     }
                 }, 2000);
-                setLoggedInStatus();
             } else {
                 setErrorMessage(response.data.message);
                 setSuccessMessage('');

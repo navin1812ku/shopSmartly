@@ -23,7 +23,7 @@ function App() {
       <UserProvider>
         <Router>
           <Routes>
-            <Route path='/' element={<Navbar />}>
+            <Route path="/" element={<Navbar />}>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

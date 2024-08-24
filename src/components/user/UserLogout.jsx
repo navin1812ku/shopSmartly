@@ -5,12 +5,11 @@ import { useUserstate } from '../../components/useContext/UserContext'
 
 function UserLogout() {
     const navigate = useNavigate();
-    const { setUserLoggedInStatus, setLoggedInStatus } = useUserstate();
+    const { setUserLoggedInStatus } = useUserstate();
 
     useEffect(() => {
         localStorage.clear();
         setUserLoggedInStatus();
-        setLoggedInStatus();
         navigate("/")
     });
 }
