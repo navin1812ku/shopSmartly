@@ -12,7 +12,7 @@ function UserLogout() {
         setUserLoggedInStatus();
         setLoggedInStatus();
         navigate("/")
-    })
+    });
 }
 
 export default UserLogout;

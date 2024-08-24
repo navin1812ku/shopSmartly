@@ -222,7 +222,7 @@ const UserLandingPage = () => {
                     </div>
                 )}
             </form>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 md:w-11/12 lg:w-9/12 lg:grid-cols-3 w-80">
+            <div className="flex">
                 {products && products.length > 0 ? (
                     products.map((product) => (
                         <div key={product._id} className="bg-white shadow-md rounded-lg overflow-hidden">

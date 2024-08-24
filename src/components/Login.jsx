@@ -2,12 +2,11 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useUserstate } from '../components/useContext/UserContext';
-import bcrytojs from 'bcryptjs';
 
 const Login = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
-    const { setLoggedInStatus, setUserLoggedInStatus, setAdminLoggedInStatus, setVendorLoggedInStatus, setCourierLoggedInStatus } = useUserstate();
+    const {setUserLoggedInStatus} = useUserstate();
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
@@ -26,19 +25,9 @@ const Login = () => {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('role', response.data.details.role);
                 setTimeout(() => {
-                    if (response.data.details.role === `ADMIN`) {
-                        setAdminLoggedInStatus();
-                        navigate(`/admin/home`);
-                    }
-                    else if (response.data.details.role === `USER`) {
+                    if (response.data.details.role === `USER`) {
                         setUserLoggedInStatus();
                         navigate(`/user/home/products`);
-                    } else if (response.data.details.role === `VENDOR`) {
-                        setVendorLoggedInStatus();
-                        navigate(`/vendor/home`);
-                    } else if (response.data.details.role === `COURIER`) {
-                        setCourierLoggedInStatus();
-                        navigate(`/courier/home`);
                     }
                 }, 2000);
                 setLoggedInStatus();
