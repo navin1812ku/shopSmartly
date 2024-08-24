@@ -15,6 +15,7 @@ import Cart from './components/user/UserCart';
 import UserWishList from './components/user/UserWishList';
 import UserWishListDetails from './components/user/UserWishListDetails';
 import { UserProvider } from './components/useContext/UserContext';
+import Profile from './components/user/Profile';
 
 function App() {
 
@@ -28,7 +29,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/user/home/:id" element={<UserLandingPage />} />
-              <Route path="/user/profile" element={<UserProfile />} />
+              {/* <Route path="/user/profile" element={<UserProfile />} /> */}
+              <Route path="/user/profile" element={<Profile />} />
               <Route path="/user/cart" element={<Cart />} />
               <Route path="/user/wishList" element={<UserWishList />} />
               <Route path="/user/wishListDetails/:id" element={<UserWishListDetails />} />
