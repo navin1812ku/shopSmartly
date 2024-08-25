@@ -28,11 +28,15 @@ const Profile = () => {
         fetchProfile();
     }, []);
 
-    
+
     return (
-        <div>
-            <h1>Your Profile</h1>
-            <h1>{profile.firstName}</h1>
+        <div className="bg-slate-300 h-screen">
+            <div className="justify-center items-center flex flex-col mt-5 text-3xl font-bold text-red-600">
+                <h1 className="">Your Profile</h1>
+            </div>
+            <div>
+                <h1>Hello {profile.firstName}</h1>
+            </div>
         </div>
     )
 };
