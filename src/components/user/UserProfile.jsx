@@ -83,7 +83,6 @@ const UserProfile = () => {
     };
 
     const handleInputChange = (e) => {
-        // Handle input changes in edit mode
         setProfile({
             ...profile,
             [e.target.name]: e.target.value
@@ -91,12 +90,10 @@ const UserProfile = () => {
     };
 
     const handleAddAddress = () => {
-        // Enable add address mode
         setAddAddressMode(true);
     };
 
     const handleAddressInputChange = (e) => {
-        // Handle input changes in add address mode
         setNewAddress({
             ...newAddress,
             [e.target.name]: e.target.value
@@ -139,7 +136,6 @@ const UserProfile = () => {
     };
 
     const handleEditAddress = (addressId) => {
-        // Fetch address details and enable edit mode
         const selectedAddress = profile.address.find(address => address._id === addressId);
         if (selectedAddress) {
             setEditAddressMode(true);
@@ -162,7 +158,6 @@ const UserProfile = () => {
     };
 
     const handleEditAddressInputChange = (e) => {
-        // Handle input changes in edit address mode
         setEditAddressDetails({
             ...editAddressDetails,
             [e.target.name]: e.target.value
@@ -193,7 +188,6 @@ const UserProfile = () => {
     };
 
     const handleCancelEditAddress = () => {
-        // Cancel editing address
         setEditAddressMode(false);
         setEditAddressId('');
         setEditAddressDetails({
@@ -269,8 +263,6 @@ const UserProfile = () => {
             )}
             <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-screen-sm">
                 <h2 className="text-2xl font-semibold mb-4 text-center">User Profile</h2>
-
-                {/* Profile Information Container */}
                 <div className="mb-6 p-4 bg-gray-200 rounded">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-lg font-medium">Profile Information</h3>
@@ -334,8 +326,6 @@ const UserProfile = () => {
                         </div>
                     )}
                 </div>
-
-                {/* Addresses Container */}
                 <div>
                     <h3 className="text-lg font-medium mb-4 flex justify-between items-center">
                         Addresses
