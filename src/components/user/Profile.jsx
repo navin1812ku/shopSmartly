@@ -4,29 +4,29 @@ import { useEffect, useState } from "react";
 const Profile = () => {
     const [profile, setProfile] = useState({});
 
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:8081/user/details', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                if (response.data.success) {
-                    setProfile(response.data.details);
-                    console.log(response.data.details);
-                }
-                else {
-                    console.log(`Error fetching profile: `, response.data.message);
-                }
-            }
-            catch (error) {
-                console.error(`Error in fetching the user data: `, error);
-            }
-        }
-        fetchProfile();
-    }, []);
+    // useEffect(() => {
+    //     const fetchProfile = async () => {
+    //         try {
+    //             const token = localStorage.getItem('token');
+    //             const response = await axios.get('http://localhost:8081/user/details', {
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`
+    //                 }
+    //             });
+    //             if (response.data.success) {
+    //                 setProfile(response.data.details);
+    //                 console.log(response.data.details);
+    //             }
+    //             else {
+    //                 console.log(`Error fetching profile: `, response.data.message);
+    //             }
+    //         }
+    //         catch (error) {
+    //             console.error(`Error in fetching the user data: `, error);
+    //         }
+    //     }
+    //     fetchProfile();
+    // }, []);
 
 
     return (
@@ -35,7 +35,7 @@ const Profile = () => {
                 <h1 className="">Your Profile</h1>
             </div>
             <div>
-                <h1>Hello {profile.firstName}</h1>
+                <h1>Hello Naveen</h1>
             </div>
         </div>
     )
